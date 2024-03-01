@@ -1,0 +1,128 @@
+6100mdetavex@calypso² NDLC % ls -1 | sed -e 's/\.brres$//'
+Chihuahua model
+Cupid bench
+Dolphin model
+DsLite
+Eiffel Tower
+GameCube dresser
+Girl's Day updo
+Gracie dresser
+Jingle TV
+Kapp'n model
+Kintaro wig
+Labrador model
+Mushroom rack
+Nintendo DSi B
+Nintendo DSi W
+Pave clock
+Snowman vanity
+Wii locker
+anniversary cake
+banana split hat
+blossom lantern
+bus model
+carp banner
+celebration hat
+creepy bat stone
+creepy carpet
+creepy cauldron
+creepy clock
+creepy coffin
+creepy crystal
+creepy skeleton
+creepy statue
+creepy stone
+creepy wallpaper
+cucumber horse
+dachshund model
+dalmation model
+egg TV
+eggplant cow
+election poster
+emperor's cap
+fedora chair
+festive wreath
+flamenco hat
+flower bouquet
+ghost umbrella
+golden bed
+golden bench
+golden carpet
+golden chair
+golden clock
+golden closet
+golden dresser
+golden man
+golden screen
+golden table
+golden wallpaper
+golden woman
+green headgear
+guard's helmet
+hagoita
+hopscotch floor
+hot dog hat
+kimbap plate
+ladder shades
+maple umbrella
+morning glory
+pile of leaves
+red Pikmin
+red horned hat
+red team hat
+samgyetang bowl
+sand castle
+school cap
+shamrock hat
+shaved ice lamp
+shopping cart
+snowman head
+sporty floor
+sporty wall
+student cap
+sweets player
+tam o'shanter
+tokonoma
+top
+tsunokakushi
+tteok plate
+white police cap
+white school cap
+white team hat
+wildflower floor
+6100mdetavex@calypso² NDLC % time
+shell  0.01s user 0.05s system 0% cpu 19:21.95 total
+children  0.02s user 0.05s system 0% cpu 19:21.95 total
+6100mdetavex@calypso² NDLC % date
+Thu Feb 15 17:00:34 MST 2024
+6100mdetavex@calypso² NDLC % cd ../OHDLC 
+6100mdetavex@calypso² OHDLC % ls -1 | sed -e 's/\.brres$//'
+Ash Cap
+Big Axe1
+Big Axe2
+BlueLightSabreV1
+DemonMask Blue
+DemonMask Red
+DimentioMask
+Falcon Helmet
+Green Crayon
+Guitar Axe1
+Guitar Axe2
+Guitar Axe3
+Guitar Axe4
+Lame Katana1
+Ninja Axe
+Pikachu Hat
+Red Crayon
+RedLightSabreV1
+ShinyBluePikmin
+Spinning Poke Balls
+blue carnations
+smiley umbrella
+wreath umbrella
+6100mdetavex@calypso² OHDLC % time                         
+shell  0.03s user 0.09s system 0% cpu 1:13:53.59 total
+children  0.02s user 0.06s system 0% cpu 1:13:53.59 total
+6100mdetavex@calypso² OHDLC % date                         
+Thu Feb 15 17:54:44 MST 2024
+6100mdetavex@calypso² OHDLC % 

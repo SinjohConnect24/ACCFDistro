@@ -1,0 +1,11 @@
+Feb 15 4:54 PM
+
+k here we go
+So first off, i think ill be starting with a dictonary, per dlc_list.txt and *ref*?
+Ideally ill place this in config, time to get to work
+*signs off notes at 4:57pm*
+
+
+Feb 15 6:23 PM
+k, so got most of the setup done, its now just a matter of writing the mux, adding BRRES's and this
+is in a beta state. Excellent.

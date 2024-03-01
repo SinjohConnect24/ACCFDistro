@@ -1,0 +1,1 @@
+DLC List Generation Command (in current dir): ls -1 | sed -e 's/\.brres$//'

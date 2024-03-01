@@ -1,0 +1,14 @@
+PROD_MODE = False
+PROD_DIR = ""
+PROD_PUSH = True
+PROD_WHOOK = True
+
+TEST_MODE = True
+TEST_DIR = "/Users/6100mdetavex/ac24"
+TEST_PUSH = True
+TEST_WHOOK = True
+
+REGION_CODE = "US"
+REGION_LETTER = "E"
+WEBHOOK = "discord.com/api/webhooks/1213200008648851576/nkDB8nKP8m6QOP_0bojFeEz5bb1U1Cn739ita7Rx9N7La0MFH5z8UbSo2EcZxo8ZGGQW"
+WEBHOOK_PREFIX = "https"
