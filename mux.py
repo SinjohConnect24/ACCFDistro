@@ -19,7 +19,15 @@ req_log.setLevel(logging.DEBUG)
 req_log.propagate = True
 
 
-def runner(webhook_url, region_letter, webhook_prefix, whook_bool, push_bool, srv_dir, region_code):
+def runner(
+    webhook_url,
+    region_letter,
+    webhook_prefix,
+    whook_bool,
+    push_bool,
+    srv_dir,
+    region_code,
+):
     # Get current path of python script
     current_path = os.path.split(os.path.abspath(__file__))[0]
 
@@ -69,22 +77,24 @@ def runner(webhook_url, region_letter, webhook_prefix, whook_bool, push_bool, sr
                     "fields": [
                         {
                             "name": "Distribution time:",
-                            "value": int(calendar.timegm(datetime.now(timezone.utc).timetuple())),
-                            "inline": True
+                            "value": int(
+                                calendar.timegm(datetime.now(timezone.utc).timetuple())
+                            ),
+                            "inline": True,
                         },
                         {
                             "name": "Debug data",
                             "value": f"{region_letter}/{region_code}",
-                            "inline": True
-                        }
+                            "inline": True,
+                        },
                     ],
                     "thumbnail": {
                         "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Animal_Crossing_Leaf.svg"
-                               "/2149px-Animal_Crossing_Leaf.svg.png"
+                        "/2149px-Animal_Crossing_Leaf.svg.png"
                     },
                     "image": {
                         "url": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2020/05/Animal"
-                               "-Crossing-New-Horizons-Able-Sisters-Exterior-Butterfly-Dress.jpg"
+                        "-Crossing-New-Horizons-Able-Sisters-Exterior-Butterfly-Dress.jpg"
                     },
                     "footer": {
                         "text": "Enjoy!",
@@ -93,7 +103,9 @@ def runner(webhook_url, region_letter, webhook_prefix, whook_bool, push_bool, sr
                 }
             ],
         }
-        post_webhook = requests.post(f"{webhook_prefix}://{webhook_url}", json=data, allow_redirects=True)
+        post_webhook = requests.post(
+            f"{webhook_prefix}://{webhook_url}", json=data, allow_redirects=True
+        )
     else:
         print("[INFO] WHOOK_BOOL is disabled.")
 

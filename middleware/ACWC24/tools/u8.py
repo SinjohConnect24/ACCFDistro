@@ -46,7 +46,10 @@ class U8:
         off_data = get_uint32(buf, 0x0C)
 
         root_node = _U8Node.unpack(buf, off_root)
-        nodes = [_U8Node.unpack(buf, off_root + NODE_SIZE * (i + 1)) for i in range(root_node.lenData - 1)]
+        nodes = [
+            _U8Node.unpack(buf, off_root + NODE_SIZE * (i + 1))
+            for i in range(root_node.lenData - 1)
+        ]
         strings_pos = off_root + root_node.lenData * NODE_SIZE
 
         recursion = [root_node.lenData]
@@ -57,13 +60,13 @@ class U8:
             name = get_string(buf, strings_pos + node.offName, "latin-1")
 
             if node.isDir:
-                path = '/'.join(recursion_dir + [name])
+                path = "/".join(recursion_dir + [name])
                 recursion.append(node.lenData)
                 recursion_dir.append(name)
                 self._files[path] = None
             else:
-                path = '/'.join(recursion_dir + [name])
-                data = buf[node.off_data:node.off_data + node.lenData]
+                path = "/".join(recursion_dir + [name])
+                data = buf[node.off_data : node.off_data + node.lenData]
                 self._files[path] = data
 
             if len(recursion_dir):
@@ -91,10 +94,10 @@ class U8:
             node.isDir = data is None
             node.offName = len(strings)
 
-            name = path.split('/')[-1]
+            name = path.split("/")[-1]
             strings += (name + "\0").encode("latin-1")
 
-            recursion = path.count('/')
+            recursion = path.count("/")
             if recursion < 0:
                 recursion = 0
 
@@ -102,7 +105,7 @@ class U8:
                 node.off_data = recursion
                 node.lenData = len(nodes)
                 for sub_path in paths:
-                    if sub_path[:len(path)] == path:
+                    if sub_path[: len(path)] == path:
                         node.lenData += 1
             else:
                 node.off_data = len(full_data)

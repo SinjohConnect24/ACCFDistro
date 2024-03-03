@@ -18,13 +18,13 @@ def _decode_string(data, off: int = 0) -> str:
     ret_str = ""
 
     while True:
-        char = data[off:off + 2].decode('utf-16be')
+        char = data[off : off + 2].decode("utf-16be")
 
         if ord(char) == 0x0000:
             return ret_str
         elif ord(char) == 0x001A:
             esc_len = get_uint8(data, off + 0x2)
-            ret_str += _decode_esc_sequence(data[off:off + esc_len])
+            ret_str += _decode_esc_sequence(data[off : off + esc_len])
             off += esc_len
         else:
             ret_str += char
@@ -32,14 +32,14 @@ def _decode_string(data, off: int = 0) -> str:
 
 
 def _encode_esc_sequence(esc_string: str) -> bytearray:
-    esc_string = esc_string[1:len(esc_string) - 1]
-    esc_params = esc_string.split('=')
+    esc_string = esc_string[1 : len(esc_string) - 1]
+    esc_params = esc_string.split("=")
 
     return bytearray.fromhex(esc_string)
 
 
 def _encode_string(message: str):
-    null_terminator = '\0'.encode("utf-16be")
+    null_terminator = "\0".encode("utf-16be")
 
     if not message or message == "":
         return null_terminator
@@ -50,12 +50,12 @@ def _encode_string(message: str):
     while cur_idx < len(message):
         cur_char = message[cur_idx]
 
-        if cur_char == '{':
+        if cur_char == "{":
             closing_idx = cur_idx + 1
 
             while closing_idx < len(message):
-                if message[closing_idx] == '}':
-                    encoded += _encode_esc_sequence(message[cur_idx:closing_idx + 1])
+                if message[closing_idx] == "}":
+                    encoded += _encode_esc_sequence(message[cur_idx : closing_idx + 1])
                     cur_idx = closing_idx + 1
                     break
                 else:
@@ -112,7 +112,9 @@ class Bmg:
         if not buf:
             return
 
-        if not (get_uint32(buf, 0x00) == MESG_MAGIC and get_uint32(buf, 0x04) == bmg1_MAGIC):
+        if not (
+            get_uint32(buf, 0x00) == MESG_MAGIC and get_uint32(buf, 0x04) == bmg1_MAGIC
+        ):
             raise Exception("Error: Buffer does not contain MESGbmg1 data.")
 
         file_size = get_uint32(buf, 0x08)
@@ -127,7 +129,9 @@ class Bmg:
 
         for i in range(num_messages):
             message = Message.unpack(buf, cur + 0x10 + len_messages * i)
-            message.text = _decode_string(buf, cur + section_size + 0x8 + message.offText)
+            message.text = _decode_string(
+                buf, cur + section_size + 0x8 + message.offText
+            )
             self.get_messages().append(message)
 
         # DAT1

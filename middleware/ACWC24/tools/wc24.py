@@ -45,7 +45,9 @@ def encrypt(data) -> bytes:
     aes = pyaes.AESModeOfOperationOFB(AES_KEY, iv=iv)
     encrypted = aes.encrypt(data)
 
-    out_data = bytearray(WC24_HEADER_SIZE + INIT_VECTOR_SIZE + SIGNATURE_SIZE + len(encrypted))
+    out_data = bytearray(
+        WC24_HEADER_SIZE + INIT_VECTOR_SIZE + SIGNATURE_SIZE + len(encrypted)
+    )
     put_uint32(out_data, 0x00, WC24_MAGIC)
     put_uint32(out_data, 0x04, 1)
     put_uint8(out_data, 0x0C, 1)

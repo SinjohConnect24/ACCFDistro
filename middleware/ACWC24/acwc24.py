@@ -7,14 +7,76 @@ from middleware.ACWC24.tools.u8 import U8
 from middleware.ACWC24.tools.wc24 import (decrypt, encrypt,
                                           is_wc24_keys_available)
 
-PAPERS = ["butterfly", "airmail", "New_Year_s_cards", "lacy", "cloudy", "petal", "snowy", "maple_leaf", "lined",
-          "notebook", "flowery", "polka_dot", "weathered", "ribbon", "sparkly", "vine", "formal", "snowman", "card",
-          "leopard", "cow", "camouflage", "hamburger", "piano", "Nook", "invite_card", "birthday_card", "four_leaf",
-          "town_hall", "Tortimer", "insurance", "academy", "lovely", "rainbow", "Egyptian", "lotus", "tile", "mosaic",
-          "elegant", "town_view", "Chinese", "ocean", "industrial", "fireworks", "floral", "mushroom", "star",
-          "composer", "bathtub", "SMB3", "cool", "forest", "bubble", "buttercup", "tartan", "plaid", "lemon_lime",
-          "crater", "bejeweled", "geometric", "southwest", "night_sky", "chic", "goldfish", "Halloween", "lantern",
-          "auction", "bulletin"]
+PAPERS = [
+    "butterfly",
+    "airmail",
+    "New_Year_s_cards",
+    "lacy",
+    "cloudy",
+    "petal",
+    "snowy",
+    "maple_leaf",
+    "lined",
+    "notebook",
+    "flowery",
+    "polka_dot",
+    "weathered",
+    "ribbon",
+    "sparkly",
+    "vine",
+    "formal",
+    "snowman",
+    "card",
+    "leopard",
+    "cow",
+    "camouflage",
+    "hamburger",
+    "piano",
+    "Nook",
+    "invite_card",
+    "birthday_card",
+    "four_leaf",
+    "town_hall",
+    "Tortimer",
+    "insurance",
+    "academy",
+    "lovely",
+    "rainbow",
+    "Egyptian",
+    "lotus",
+    "tile",
+    "mosaic",
+    "elegant",
+    "town_view",
+    "Chinese",
+    "ocean",
+    "industrial",
+    "fireworks",
+    "floral",
+    "mushroom",
+    "star",
+    "composer",
+    "bathtub",
+    "SMB3",
+    "cool",
+    "forest",
+    "bubble",
+    "buttercup",
+    "tartan",
+    "plaid",
+    "lemon_lime",
+    "crater",
+    "bejeweled",
+    "geometric",
+    "southwest",
+    "night_sky",
+    "chic",
+    "goldfish",
+    "Halloween",
+    "lantern",
+    "auction",
+    "bulletin",
+]
 
 DEFAULT_HEADERS = {
     "UsEnglish": "Dear \n,",
@@ -26,26 +88,26 @@ DEFAULT_HEADERS = {
     "German": "Hallo \n,",
     "Italian": "Ciao \n,",
     "Japanese": "Dear \n,",  # placeholder
-    "Korean": "Dear \n,"  # placeholder
+    "Korean": "Dear \n,",  # placeholder
 }
 DEFAULT_BODIES = {
     "UsEnglish": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",
     "UsFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en "
-                "bien!",
+    "bien!",
     "UsSpanish": "Gracias por usar\nFlora24. Te enviamos\nun regalo de nuestra parte:\n{0}\n¡Que lo disfrutes!",
     "EuEnglish": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",
     "EuFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en "
-                "bien!",
+    "bien!",
     "EuSpanish": "Gracias por usar\nFlora24. Te enviamos\nun regalo de nuestra parte:\n{0}\n¡Que lo disfrutes!",
     "German": "Vielen Dank, dass du\nFlora24 nutzt. Anbei\nfindest du ein Geschenk\nvon uns:\n{0}\nViel Spaß!",
     "Italian": "Grazie per aver usato\nFlora24. Abbiamo\nallegato un regalo da\nparte nostra:\n{0}\nDivertitevi!",
     "Japanese": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",  # placeholder
-    "Korean": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!"  # placeholder
+    "Korean": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",  # placeholder
 }
 
 
 def get_item_name(itemdata, off):
-    return itemdata[off:off + 0x22].decode("utf-16-be").strip("\0")
+    return itemdata[off : off + 0x22].decode("utf-16-be").strip("\0")
 
 
 def get_item_names(itemdata):
@@ -87,7 +149,7 @@ def create_letter(dlc_info: dict, locale: str, item_names: dict):
         (data["Footer"], default_attributes),
         (data["Sender"], default_attributes),
         ("{0}".format(PAPERS.index(paper) + 400), default_attributes),
-        ("", default_attributes)
+        ("", default_attributes),
     ]
 
     # Create and store the actual BMG data
@@ -137,19 +199,39 @@ def create(dlc_name: str, keep_decrypted: bool = False):
             archive.add_file("item.bin", item_data)
 
             if region == "E" or region == "All":
-                archive.add_file("ltrue.bmg", create_letter(dlc_info, "UsEnglish", item_names))
-                archive.add_file("ltruf.bmg", create_letter(dlc_info, "UsFrench", item_names))
-                archive.add_file("ltrus.bmg", create_letter(dlc_info, "UsSpanish", item_names))
+                archive.add_file(
+                    "ltrue.bmg", create_letter(dlc_info, "UsEnglish", item_names)
+                )
+                archive.add_file(
+                    "ltruf.bmg", create_letter(dlc_info, "UsFrench", item_names)
+                )
+                archive.add_file(
+                    "ltrus.bmg", create_letter(dlc_info, "UsSpanish", item_names)
+                )
             if region == "P" or region == "All":
-                archive.add_file("ltree.bmg", create_letter(dlc_info, "EuEnglish", item_names))
-                archive.add_file("ltref.bmg", create_letter(dlc_info, "EuFrench", item_names))
-                archive.add_file("ltreg.bmg", create_letter(dlc_info, "German", item_names))
-                archive.add_file("ltrei.bmg", create_letter(dlc_info, "Italian", item_names))
-                archive.add_file("ltres.bmg", create_letter(dlc_info, "EuSpanish", item_names))
+                archive.add_file(
+                    "ltree.bmg", create_letter(dlc_info, "EuEnglish", item_names)
+                )
+                archive.add_file(
+                    "ltref.bmg", create_letter(dlc_info, "EuFrench", item_names)
+                )
+                archive.add_file(
+                    "ltreg.bmg", create_letter(dlc_info, "German", item_names)
+                )
+                archive.add_file(
+                    "ltrei.bmg", create_letter(dlc_info, "Italian", item_names)
+                )
+                archive.add_file(
+                    "ltres.bmg", create_letter(dlc_info, "EuSpanish", item_names)
+                )
             if region == "J" or region == "All":
-                archive.add_file("ltrjj.bmg", create_letter(dlc_info, "Japanese", item_names))
+                archive.add_file(
+                    "ltrjj.bmg", create_letter(dlc_info, "Japanese", item_names)
+                )
             if region == "K" or region == "All":
-                archive.add_file("ltrkk.bmg", create_letter(dlc_info, "Korean", item_names))
+                archive.add_file(
+                    "ltrkk.bmg", create_letter(dlc_info, "Korean", item_names)
+                )
         if design_data:
             archive.add_file("design.bin", design_data)
         if npc_data:

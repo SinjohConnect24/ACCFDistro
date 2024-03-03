@@ -39,7 +39,9 @@ def get_int24(data, off: int) -> int:
 
 
 def get_uint24(data, off: int) -> int:
-    return (data[off] & 0xFF) << 16 | (data[off+1] & 0xFF) << 8 | (data[off+2] & 0xFF)
+    return (
+        (data[off] & 0xFF) << 16 | (data[off + 1] & 0xFF) << 8 | (data[off + 2] & 0xFF)
+    )
 
 
 def get_int32(data, off: int) -> int:
@@ -71,11 +73,11 @@ def get_bool(data, off: int) -> bool:
 
 
 def get_bytes(data, off: int, size: int) -> bytes:
-    return data[off:off+size]
+    return data[off : off + size]
 
 
 def get_string(data, off: int, charset: str = "ascii") -> str:
-    return data[off:data.find(0x00, off)].decode(charset)
+    return data[off : data.find(0x00, off)].decode(charset)
 
 
 def put_int8(data, off: int, val: int):
