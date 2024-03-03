@@ -1,5 +1,4 @@
 import json
-
 from middleware.ACWC24.tools.bitconv import put_uint32
 from middleware.ACWC24.tools.bmg import Bmg, Message
 from middleware.ACWC24.tools.files import read_file, write_file

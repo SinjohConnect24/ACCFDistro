@@ -17,7 +17,7 @@ The game also appears to support DLC NPCs, however, this needs to be investigate
 
 # Requirements
 In order to encrypt WC24 files, the `pyaes` and `rsa` modules are required. You can install them using `pip`:
-```
+```bash
 pip install pyaes
 pip install rsa
 ```
@@ -40,12 +40,12 @@ Each distributable has a folder inside the `src` directory. They all require a p
     "NpcFile": "<npc file name>",
     "Paper": "<stationery name>",
     "Letters": {
-	    "UsEnglish": {
-		    "Header": "Dear \n,",
-		    "Body": "here is your special item!",
-		    "Footer": "from Aurum",
-		    "Sender": "Aurum"
-	    }
+        "UsEnglish": {
+            "Header": "Dear \n,",
+            "Body": "here is your special item!",
+            "Footer": "from Aurum",
+            "Sender": "Aurum"
+        }
     }
 }
 ```
