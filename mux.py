@@ -68,7 +68,6 @@ def runner(
                 {
                     "author": {
                         "name": "SophiaDev's ACCF Distribution System",
-                        "url": "https://gloom.redactech.xyz",
                         "icon_url": "https://cdn-icons-png.flaticon.com/512/6612/6612622.png",
                     },
                     "title": "New DLC Item!",
