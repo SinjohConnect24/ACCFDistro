@@ -1,4 +1,3 @@
-import argparse
 import json
 
 from middleware.ACWC24.tools.bitconv import put_uint32
@@ -30,10 +29,12 @@ DEFAULT_HEADERS = {
 }
 DEFAULT_BODIES = {
     "UsEnglish": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",
-    "UsFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en bien!",
+    "UsFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en "
+                "bien!",
     "UsSpanish": "Gracias por usar\nFlora24. Te enviamos\nun regalo de nuestra parte:\n{0}\n¡Que lo disfrutes!",
     "EuEnglish": "Thank you for using\nFlora24. Attached is\na present from us:\n{0}\nEnjoy!",
-    "EuFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en bien!",
+    "EuFrench": "Merci d'utiliser\nFlora24. Un cadeau\nde notre part est attaché\nà cette lettre:\n{0}\nProfitez-en "
+                "bien!",
     "EuSpanish": "Gracias por usar\nFlora24. Te enviamos\nun regalo de nuestra parte:\n{0}\n¡Que lo disfrutes!",
     "German": "Vielen Dank, dass du\nFlora24 nutzt. Anbei\nfindest du ein Geschenk\nvon uns:\n{0}\nViel Spaß!",
     "Italian": "Grazie per aver usato\nFlora24. Abbiamo\nallegato un regalo da\nparte nostra:\n{0}\nDivertitevi!",
@@ -43,7 +44,7 @@ DEFAULT_BODIES = {
 
 
 def get_item_name(itemdata, off):
-    return itemdata[off:off+0x22].decode("utf-16-be").strip("\0")
+    return itemdata[off:off + 0x22].decode("utf-16-be").strip("\0")
 
 
 def get_item_names(itemdata):
@@ -61,7 +62,7 @@ def get_item_names(itemdata):
     return ret
 
 
-def create_letter(dlc_info: str, locale: str, item_names: dict):
+def create_letter(dlc_info: dict, locale: str, item_names: dict):
     paper = dlc_info["Paper"] if "Paper" in dlc_info else PAPERS[0]
     # Check if letter exists for specified locale
     if "Letters" in dlc_info and locale in dlc_info["Letters"]:
@@ -117,10 +118,10 @@ def create(dlc_name: str, keep_decrypted: bool = False):
 
     if item_file_name:
         item_data = read_file("items/" + item_file_name)
-        itemnames = get_item_names(item_data)
+        item_names = get_item_names(item_data)
     else:
         item_data = None
-        itemnames = None
+        item_names = None
     design_data = read_file("designs/" + design_file_name) if design_file_name else None
     npc_data = read_file("npcs/" + npc_file_name) if npc_file_name else None
 
@@ -135,19 +136,19 @@ def create(dlc_name: str, keep_decrypted: bool = False):
             archive.add_file("item.bin", item_data)
 
             if region == "E" or region == "All":
-                archive.add_file("ltrue.bmg", create_letter(dlc_info, "UsEnglish", itemnames))
-                archive.add_file("ltruf.bmg", create_letter(dlc_info, "UsFrench", itemnames))
-                archive.add_file("ltrus.bmg", create_letter(dlc_info, "UsSpanish", itemnames))
+                archive.add_file("ltrue.bmg", create_letter(dlc_info, "UsEnglish", item_names))
+                archive.add_file("ltruf.bmg", create_letter(dlc_info, "UsFrench", item_names))
+                archive.add_file("ltrus.bmg", create_letter(dlc_info, "UsSpanish", item_names))
             if region == "P" or region == "All":
-                archive.add_file("ltree.bmg", create_letter(dlc_info, "EuEnglish", itemnames))
-                archive.add_file("ltref.bmg", create_letter(dlc_info, "EuFrench", itemnames))
-                archive.add_file("ltreg.bmg", create_letter(dlc_info, "German", itemnames))
-                archive.add_file("ltrei.bmg", create_letter(dlc_info, "Italian", itemnames))
-                archive.add_file("ltres.bmg", create_letter(dlc_info, "EuSpanish", itemnames))
+                archive.add_file("ltree.bmg", create_letter(dlc_info, "EuEnglish", item_names))
+                archive.add_file("ltref.bmg", create_letter(dlc_info, "EuFrench", item_names))
+                archive.add_file("ltreg.bmg", create_letter(dlc_info, "German", item_names))
+                archive.add_file("ltrei.bmg", create_letter(dlc_info, "Italian", item_names))
+                archive.add_file("ltres.bmg", create_letter(dlc_info, "EuSpanish", item_names))
             if region == "J" or region == "All":
-                archive.add_file("ltrjj.bmg", create_letter(dlc_info, "Japanese", itemnames))
+                archive.add_file("ltrjj.bmg", create_letter(dlc_info, "Japanese", item_names))
             if region == "K" or region == "All":
-                archive.add_file("ltrkk.bmg", create_letter(dlc_info, "Korean", itemnames))
+                archive.add_file("ltrkk.bmg", create_letter(dlc_info, "Korean", item_names))
         if design_data:
             archive.add_file("design.bin", design_data)
         if npc_data:
@@ -168,15 +169,15 @@ def create(dlc_name: str, keep_decrypted: bool = False):
         write_file(out_path, output)
 
 
-def extract(dlcname: str):
-    #T#odo: Actually create this, duh...
-    pass
+"""def extract(dlcname: str):
+    # Todo: Actually create this, duh...
+    pass"""
 
 
-#parser = argparse.ArgumentParser(description="ACWC24 -- ACCF distributable creation tool by Aurum")
-#parser.add_argument("name", type=str)
-#parser.add_argument("-k", "--keep_decrypted", action="store_true")
-#args = parser.parse_args()
+"""parser = argparse.ArgumentParser(description="ACWC24 -- ACCF distributable creation tool by Aurum")
+parser.add_argument("name", type=str)
+parser.add_argument("-k", "--keep_decrypted", action="store_true")
+args = parser.parse_args()
 
-#if args.name:
-#    create(args.name, args.keep_decrypted)
+if args.name:
+    create(args.name, args.keep_decrypted)"""

@@ -2,7 +2,7 @@ import middleware.ACWC24.acwc24 as middleware
 import os
 import random
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 import calendar
 import pathlib
 import logging
@@ -17,16 +17,7 @@ req_log.setLevel(logging.DEBUG)
 req_log.propagate = True
 
 
-def runner(
-    webhook_url,
-    region_letter,
-    webhook_prefix,
-    whook_bool,
-    push_bool,
-    srv_dir,
-    region_code,
-):
-
+def runner(webhook_url, region_letter, webhook_prefix, whook_bool, push_bool, srv_dir, region_code):
     # Get current path of python script
     current_path = os.path.split(os.path.abspath(__file__))[0]
 
@@ -40,8 +31,7 @@ def runner(
     json_path = f"{current_path}/src/{head_tail}.json"
 
     # At this point in time, we have our JSON and BRRES pair.
-    # It's time to encode it with ACWC24, so as to speak and/or say.
-
+    # It's time to encode it with ACWC24, to speak and/or say.
     middleware.create(head_tail, False)
 
     # First, we properly name it.
@@ -49,8 +39,9 @@ def runner(
         f"{current_path}/build/{head_tail}_{region_letter}.arc",
         f"{current_path}/build/rvforest_{region_code}.dat",
     )
+
     # Then, we do a quick check here.
-    if push_bool == True:
+    if push_bool:
         # If it's good, then we send it.
         os.replace(
             f"{current_path}/build/rvforest_{region_code}.dat",
@@ -59,7 +50,7 @@ def runner(
     else:
         print("[INFO] PUSH_BOOL IS DISABLED.")
 
-    if whook_bool == True:
+    if whook_bool:
         data = {
             "username": "Animal Crossing DLC Bot",
             "avatar_url": "https://cdn2.steamgriddb.com/icon_thumb/f4d4c95a4336cebe07df62e614f602f5.png",
@@ -76,7 +67,7 @@ def runner(
                     "fields": [
                         {
                             "name": "Distribution time:",
-                            "value": int(calendar.timegm(datetime.utcnow().timetuple())),
+                            "value": int(calendar.timegm(datetime.now(timezone.utc).timetuple())),
                             "inline": True
                         },
                         {
@@ -86,10 +77,12 @@ def runner(
                         }
                     ],
                     "thumbnail": {
-                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Animal_Crossing_Leaf.svg/2149px-Animal_Crossing_Leaf.svg.png"
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Animal_Crossing_Leaf.svg"
+                               "/2149px-Animal_Crossing_Leaf.svg.png"
                     },
                     "image": {
-                        "url": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2020/05/Animal-Crossing-New-Horizons-Able-Sisters-Exterior-Butterfly-Dress.jpg"
+                        "url": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2020/05/Animal"
+                               "-Crossing-New-Horizons-Able-Sisters-Exterior-Butterfly-Dress.jpg"
                     },
                     "footer": {
                         "text": "Enjoy!",
@@ -98,9 +91,7 @@ def runner(
                 }
             ],
         }
-        post_webhook = requests.post(
-            f"{webhook_prefix}://{webhook_url}", json=data, allow_redirects=True
-        )
+        post_webhook = requests.post(f"{webhook_prefix}://{webhook_url}", json=data, allow_redirects=True)
     else:
         print("[INFO] WHOOK_BOOL is disabled.")
 

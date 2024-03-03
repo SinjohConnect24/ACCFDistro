@@ -4,67 +4,67 @@ from middleware.ACWC24.tools.bitconv import *
 
 
 def _decode_esc_sequence(esc) -> str:
-    esclen = esc[0x2] & 0xFF
-    esctype = esc[0x3] & 0xFF
+    esc_len = esc[0x2] & 0xFF
+    esc_type = esc[0x3] & 0xFF
 
-    retstr = "{"
+    ret_str = "{"
     for b in esc:
-        retstr += "{0:02X}".format(b)
-    retstr += "}"
-    return retstr
+        ret_str += "{0:02X}".format(b)
+    ret_str += "}"
+    return ret_str
 
 
 def _decode_string(data, off: int = 0) -> str:
-    retstr = ""
+    ret_str = ""
 
     while True:
         char = data[off:off + 2].decode('utf-16be')
 
         if ord(char) == 0x0000:
-            return retstr
+            return ret_str
         elif ord(char) == 0x001A:
-            esclen = get_uint8(data, off + 0x2)
-            retstr += _decode_esc_sequence(data[off:off + esclen])
-            off += esclen
+            esc_len = get_uint8(data, off + 0x2)
+            ret_str += _decode_esc_sequence(data[off:off + esc_len])
+            off += esc_len
         else:
-            retstr += char
+            ret_str += char
             off += 2
 
 
-def _encode_esc_sequence(escstring: str) -> bytearray:
-    escstring = escstring[1:len(escstring) - 1]
-    escparams = escstring.split('=')
+def _encode_esc_sequence(esc_string: str) -> bytearray:
+    esc_string = esc_string[1:len(esc_string) - 1]
+    esc_params = esc_string.split('=')
 
-    return bytearray.fromhex(escstring)
+    return bytearray.fromhex(esc_string)
 
 
 def _encode_string(message: str):
-    nullterminator = '\0'.encode("utf-16be")
+    null_terminator = '\0'.encode("utf-16be")
 
     if not message or message == "":
-        return nullterminator
+        return null_terminator
 
     encoded = bytearray()
-    curIdx = 0
+    cur_idx = 0
 
-    while curIdx < len(message):
-        curChar = message[curIdx]
+    while cur_idx < len(message):
+        cur_char = message[cur_idx]
 
-        if curChar == '{':
-            closingIdx = curIdx + 1
+        if cur_char == '{':
+            closing_idx = cur_idx + 1
 
-            while closingIdx < len(message):
-                if message[closingIdx] == '}':
-                    encoded += _encode_esc_sequence(message[curIdx:closingIdx + 1])
-                    curIdx = closingIdx + 1
+            while closing_idx < len(message):
+                if message[closing_idx] == '}':
+                    encoded += _encode_esc_sequence(message[cur_idx:closing_idx + 1])
+                    cur_idx = closing_idx + 1
                     break
                 else:
-                    closingIdx += 1
+                    closing_idx += 1
         else:
-            encoded += curChar.encode("utf-16be")
-            curIdx += 1
+            encoded += cur_char.encode("utf-16be")
+            cur_idx += 1
 
-    encoded += nullterminator
+    encoded += null_terminator
 
     return encoded
 

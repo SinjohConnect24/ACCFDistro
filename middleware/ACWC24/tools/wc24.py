@@ -41,18 +41,18 @@ def encrypt(data) -> bytes:
     if not is_wc24_keys_available():
         raise Exception("RSA-AES keys not initialized. Can't encrypt data.")
 
-    privkey = rsa.PrivateKey.load_pkcs1(RSA_KEY, "PEM")
-    signature = rsa.sign(data, privkey, "SHA-1")
+    private_key = rsa.PrivateKey.load_pkcs1(RSA_KEY, "PEM")
+    signature = rsa.sign(data, private_key, "SHA-1")
     iv = os.urandom(INIT_VECTOR_SIZE)
     aes = pyaes.AESModeOfOperationOFB(AES_KEY, iv=iv)
     encrypted = aes.encrypt(data)
 
-    outdata = bytearray(WC24_HEADER_SIZE + INIT_VECTOR_SIZE + SIGNATURE_SIZE + len(encrypted))
-    put_uint32(outdata, 0x00, WC24_MAGIC)
-    put_uint32(outdata, 0x04, 1)
-    put_uint8(outdata, 0x0C, 1)
-    put_bytes(outdata, INIT_VECTOR_OFFSET, iv)
-    put_bytes(outdata, SIGNATURE_OFFSET, signature)
-    put_bytes(outdata, DATA_OFFSET, encrypted)
+    out_data = bytearray(WC24_HEADER_SIZE + INIT_VECTOR_SIZE + SIGNATURE_SIZE + len(encrypted))
+    put_uint32(out_data, 0x00, WC24_MAGIC)
+    put_uint32(out_data, 0x04, 1)
+    put_uint8(out_data, 0x0C, 1)
+    put_bytes(out_data, INIT_VECTOR_OFFSET, iv)
+    put_bytes(out_data, SIGNATURE_OFFSET, signature)
+    put_bytes(out_data, DATA_OFFSET, encrypted)
 
-    return bytes(outdata)
+    return bytes(out_data)
