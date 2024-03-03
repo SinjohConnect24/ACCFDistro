@@ -1,6 +1,8 @@
+import sys
+
 import config.configscript as data
 import mux
-import sys
+
 # First, we (kind of) efficiently perform all the sanity checks
 # and config passes.
 if data.PROD_MODE is True:

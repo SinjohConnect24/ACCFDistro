@@ -1,9 +1,11 @@
 import json
+
 from middleware.ACWC24.tools.bitconv import put_uint32
 from middleware.ACWC24.tools.bmg import Bmg, Message
 from middleware.ACWC24.tools.files import read_file, write_file
 from middleware.ACWC24.tools.u8 import U8
-from middleware.ACWC24.tools.wc24 import is_wc24_keys_available, decrypt, encrypt
+from middleware.ACWC24.tools.wc24 import (decrypt, encrypt,
+                                          is_wc24_keys_available)
 
 PAPERS = ["butterfly", "airmail", "New_Year_s_cards", "lacy", "cloudy", "petal", "snowy", "maple_leaf", "lined",
           "notebook", "flowery", "polka_dot", "weathered", "ribbon", "sparkly", "vine", "formal", "snowman", "card",

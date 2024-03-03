@@ -1,12 +1,14 @@
-import os
-import random
-import requests
 import calendar
-import pathlib
-import logging
-import middleware.ACWC24.acwc24 as middleware
 import http.client as httplib
+import logging
+import os
+import pathlib
+import random
 from datetime import datetime, timezone
+
+import requests
+
+import middleware.ACWC24.acwc24 as middleware
 
 # Debug logging
 httplib.HTTPConnection.debuglevel = 1
