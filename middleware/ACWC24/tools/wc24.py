@@ -3,8 +3,13 @@ import os
 import pyaes
 import rsa
 
-from middleware.ACWC24.tools.bitconv import (get_bytes, get_uint32, put_bytes,
-                                             put_uint8, put_uint32)
+from middleware.ACWC24.tools.bitconv import (
+    get_bytes,
+    get_uint32,
+    put_bytes,
+    put_uint8,
+    put_uint32,
+)
 from middleware.ACWC24.tools.files import read_file
 
 WC24_MAGIC = 0x57433234
