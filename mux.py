@@ -47,15 +47,15 @@ def runner(
     # First, we properly name it.
     os.rename(
         f"{current_path}/build/{head_tail}_{region_letter}.arc.wc24",
-        f"{current_path}/build/rvforestdl_{region_code}.dat",
+        f"{current_path}/build/rvforestdl_{region_code}.enc",
     )
 
     # Then, we do a quick check here.
     if push_bool:
         # If it's good, then we send it.
         os.replace(
-            f"{current_path}/build/rvforestdl_{region_code}.dat",
-            f"{srv_dir}/ruu/rvforestdl_{region_code}.dat",
+            f"{current_path}/build/rvforestdl_{region_code}.enc",
+            f"{srv_dir}/ruu/rvforestdl_{region_code}.enc",
         )
     else:
         print("[INFO] PUSH_BOOL IS DISABLED.")
