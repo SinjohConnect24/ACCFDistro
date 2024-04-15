@@ -1,1 +1,11 @@
 .idea
+builder
+debug
+doc
+ems
+extra
+items
+sys
+*.bin
+*.pem
+*.sql
